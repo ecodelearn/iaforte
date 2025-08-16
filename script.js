@@ -1,5 +1,62 @@
-// Mobile Navigation Toggle
+// Theme Management
+function initializeTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const defaultTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+    
+    document.documentElement.setAttribute('data-theme', defaultTheme);
+    updateThemeIcon(defaultTheme);
+}
+
+function updateThemeIcon(theme) {
+    const themeIcon = document.querySelector('.theme-icon');
+    if (themeIcon) {
+        themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+    }
+}
+
+function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    updateThemeIcon(newTheme);
+    
+    // Add a smooth transition effect
+    document.body.style.transition = 'all 0.3s ease';
+    setTimeout(() => {
+        document.body.style.transition = '';
+    }, 300);
+}
+
+// Theme Toggle Event Listener
 document.addEventListener('DOMContentLoaded', function() {
+    initializeTheme();
+    
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', toggleTheme);
+        
+        // Keyboard accessibility
+        themeToggle.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleTheme();
+            }
+        });
+    }
+    
+    // Listen for system theme changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+        if (!localStorage.getItem('theme')) {
+            const newTheme = e.matches ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            updateThemeIcon(newTheme);
+        }
+    });
+
+// Mobile Navigation Toggle
     const navToggle = document.getElementById('nav-toggle');
     const navMenu = document.getElementById('nav-menu');
     const navLinks = document.querySelectorAll('.nav-link');

@@ -6,23 +6,75 @@
 }
 
 :root {
-    --primary-color: #002c2b;
-    --accent-color: #ff3d00;
-    --secondary-color: #ffbc11;
-    --light-green: #0a837f;
-    --dark-green: #076461;
-    --white: #ffffff;
-    --light-gray: #f8f9fa;
-    --dark-gray: #333333;
-    --text-dark: #2c2c2c;
-    --text-light: #666666;
+    /* Light Theme Colors */
+    --primary-color: #1a5b5a;
+    --accent-color: #ff5722;
+    --secondary-color: #ffc107;
+    --tertiary-color: #4caf50;
+    
+    /* Background Colors */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-tertiary: #e9ecef;
+    --bg-overlay: rgba(26, 91, 90, 0.1);
+    
+    /* Text Colors */
+    --text-primary: #212529;
+    --text-secondary: #6c757d;
+    --text-muted: #868e96;
+    --text-inverse: #ffffff;
+    
+    /* Border & Shadow */
+    --border-color: #dee2e6;
+    --shadow-light: rgba(0, 0, 0, 0.1);
+    --shadow-medium: rgba(0, 0, 0, 0.15);
+    --shadow-dark: rgba(0, 0, 0, 0.25);
+    
+    /* Success, Warning, Error */
+    --success-color: #28a745;
+    --warning-color: #ffc107;
+    --error-color: #dc3545;
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+    /* Dark Theme Colors */
+    --primary-color: #4db6ac;
+    --accent-color: #ff7043;
+    --secondary-color: #ffca28;
+    --tertiary-color: #66bb6a;
+    
+    /* Background Colors */
+    --bg-primary: #121212;
+    --bg-secondary: #1e1e1e;
+    --bg-tertiary: #2d2d2d;
+    --bg-overlay: rgba(77, 182, 172, 0.1);
+    
+    /* Text Colors */
+    --text-primary: #ffffff;
+    --text-secondary: #b3b3b3;
+    --text-muted: #888888;
+    --text-inverse: #121212;
+    
+    /* Border & Shadow */
+    --border-color: #404040;
+    --shadow-light: rgba(0, 0, 0, 0.3);
+    --shadow-medium: rgba(0, 0, 0, 0.4);
+    --shadow-dark: rgba(0, 0, 0, 0.6);
+    
+    /* Success, Warning, Error */
+    --success-color: #4caf50;
+    --warning-color: #ff9800;
+    --error-color: #f44336;
 }
 
 body {
     font-family: 'Arial', sans-serif;
     line-height: 1.6;
-    color: var(--text-dark);
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .container {
@@ -57,13 +109,14 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Header */
 .header {
-    background: var(--white);
+    background: var(--bg-primary);
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0, 44, 43, 0.1);
+    box-shadow: 0 2px 10px var(--shadow-light);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .nav {
@@ -71,6 +124,7 @@ h1, h2, h3, h4, h5, h6 {
     justify-content: space-between;
     align-items: center;
     padding: 1rem 0;
+    gap: 1rem;
 }
 
 .nav-brand {
@@ -127,6 +181,39 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--accent-color);
 }
 
+/* Theme Toggle */
+.theme-toggle {
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+}
+
+.theme-toggle:hover {
+    background: var(--bg-tertiary);
+    border-color: var(--primary-color);
+    transform: scale(1.05);
+}
+
+.theme-toggle:active {
+    transform: scale(0.95);
+}
+
+.theme-icon {
+    transition: transform 0.3s ease;
+}
+
+[data-theme="dark"] .theme-icon {
+    transform: rotate(180deg);
+}
+
 /* Buttons */
 .btn {
     display: inline-block;
@@ -143,11 +230,11 @@ h1, h2, h3, h4, h5, h6 {
 
 .btn-primary {
     background: var(--accent-color);
-    color: var(--white);
+    color: var(--text-inverse);
 }
 
 .btn-primary:hover {
-    background: #e63600;
+    background: var(--primary-color);
     transform: translateY(-2px);
 }
 
@@ -159,7 +246,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .btn-secondary:hover {
     background: var(--primary-color);
-    color: var(--white);
+    color: var(--text-inverse);
 }
 
 .btn-full {
@@ -168,12 +255,24 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--dark-green) 100%);
-    color: var(--white);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--tertiary-color) 100%);
+    color: var(--text-inverse);
     padding: 120px 0 80px;
     min-height: 100vh;
     display: flex;
     align-items: center;
+    position: relative;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--bg-overlay);
+    pointer-events: none;
 }
 
 .hero-content {
@@ -235,7 +334,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Services Section */
 .services {
     padding: 80px 0;
-    background: var(--light-gray);
+    background: var(--bg-secondary);
 }
 
 .services-grid {
@@ -245,17 +344,18 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .service-card {
-    background: var(--white);
+    background: var(--bg-primary);
     padding: 2.5rem;
     border-radius: 16px;
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0, 44, 43, 0.1);
+    box-shadow: 0 10px 30px var(--shadow-light);
     transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid var(--border-color);
 }
 
 .service-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0, 44, 43, 0.15);
+    box-shadow: 0 20px 40px var(--shadow-medium);
 }
 
 .service-icon {
@@ -274,7 +374,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .service-description {
-    color: var(--text-light);
+    color: var(--text-secondary);
     margin-bottom: 1.5rem;
 }
 
@@ -285,14 +385,14 @@ h1, h2, h3, h4, h5, h6 {
 
 .service-features li {
     padding: 0.5rem 0;
-    color: var(--text-light);
+    color: var(--text-secondary);
     position: relative;
     padding-left: 1.5rem;
 }
 
 .service-features li::before {
     content: "✓";
-    color: var(--light-green);
+    color: var(--tertiary-color);
     font-weight: bold;
     position: absolute;
     left: 0;
@@ -301,7 +401,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Legal Section */
 .legal {
     padding: 80px 0;
-    background: var(--white);
+    background: var(--bg-primary);
 }
 
 .legal-content {
@@ -331,12 +431,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .legal-feature p {
-    color: var(--text-light);
+    color: var(--text-secondary);
 }
 
 .legal-metrics {
-    background: linear-gradient(135deg, var(--primary-color), var(--dark-green));
-    color: var(--white);
+    background: linear-gradient(135deg, var(--primary-color), var(--tertiary-color));
+    color: var(--text-inverse);
     padding: 2.5rem;
     border-radius: 16px;
     text-align: center;
@@ -374,7 +474,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Contact Section */
 .contact {
     padding: 80px 0;
-    background: var(--light-gray);
+    background: var(--bg-secondary);
 }
 
 .contact-content {
@@ -383,11 +483,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .contact-form {
-    background: var(--white);
+    background: var(--bg-primary);
     padding: 3rem;
     border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0, 44, 43, 0.1);
+    box-shadow: 0 10px 30px var(--shadow-light);
     margin-bottom: 2rem;
+    border: 1px solid var(--border-color);
 }
 
 .form-row {
@@ -411,16 +512,18 @@ h1, h2, h3, h4, h5, h6 {
 .form-group textarea {
     width: 100%;
     padding: 1rem;
-    border: 2px solid #e0e0e0;
+    border: 2px solid var(--border-color);
     border-radius: 8px;
     font-size: 1rem;
     transition: border-color 0.3s;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: var(--light-green);
+    border-color: var(--primary-color);
 }
 
 .contact-info {
@@ -487,8 +590,22 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Responsive Design - Mobile First */
 @media (max-width: 768px) {
+    .nav {
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: nowrap;
+    }
+    
     .nav-toggle {
         display: flex;
+        order: 2;
+    }
+    
+    .theme-toggle {
+        order: 3;
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
     }
     
     .nav-menu {
@@ -496,12 +613,13 @@ h1, h2, h3, h4, h5, h6 {
         top: 100%;
         left: 0;
         right: 0;
-        background: var(--white);
+        background: var(--bg-primary);
         flex-direction: column;
         padding: 2rem;
         transform: translateY(-100vh);
         transition: transform 0.3s;
-        box-shadow: 0 5px 15px rgba(0, 44, 43, 0.1);
+        box-shadow: 0 5px 15px var(--shadow-medium);
+        border-top: 1px solid var(--border-color);
     }
     
     .nav-menu.active {
@@ -657,17 +775,48 @@ html {
 /* Focus States for Accessibility */
 .btn:focus,
 .nav-link:focus,
+.theme-toggle:focus,
 input:focus,
 textarea:focus {
     outline: 2px solid var(--secondary-color);
     outline-offset: 2px;
 }
 
-/* High Contrast Mode */
+/* Smooth transitions for theme switching */
+* {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* High contrast support */
 @media (prefers-contrast: high) {
     :root {
-        --primary-color: #000000;
-        --text-light: #000000;
-        --light-gray: #ffffff;
+        --shadow-light: rgba(0, 0, 0, 0.3);
+        --shadow-medium: rgba(0, 0, 0, 0.5);
+        --shadow-dark: rgba(0, 0, 0, 0.7);
+        --border-color: #000000;
+    }
+    
+    [data-theme="dark"] {
+        --border-color: #ffffff;
+        --shadow-light: rgba(255, 255, 255, 0.3);
+        --shadow-medium: rgba(255, 255, 255, 0.5);
+        --shadow-dark: rgba(255, 255, 255, 0.7);
     }
 }
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .theme-icon {
+        transition: none !important;
+    }
+}
+
