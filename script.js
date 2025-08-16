@@ -1,12 +1,10 @@
 // Theme Management
 function initializeTheme() {
-    const savedTheme = localStorage.getItem('theme');
-    // Always default to light theme unless explicitly saved as dark
-    const defaultTheme = savedTheme || 'light';
-    
-    document.documentElement.setAttribute('data-theme', defaultTheme);
-    updateThemeIcon(defaultTheme);
-    console.log('Theme initialized to:', defaultTheme);
+    // Sempre inicia com tema claro, ignorando localStorage e sistema
+    document.documentElement.setAttribute('data-theme', 'light');
+    updateThemeIcon('light');
+    localStorage.setItem('theme', 'light');
+    console.log('Theme initialized to: light');
 }
 
 function updateThemeIcon(theme) {
