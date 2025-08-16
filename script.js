@@ -32,19 +32,30 @@ function toggleTheme() {
 
 // Theme Toggle Event Listener
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, initializing theme...');
     initializeTheme();
     
     const themeToggle = document.getElementById('theme-toggle');
+    console.log('Theme toggle button found:', themeToggle);
+    
     if (themeToggle) {
-        themeToggle.addEventListener('click', toggleTheme);
+        console.log('Adding click event listener to theme toggle');
+        themeToggle.addEventListener('click', function(e) {
+            console.log('Theme toggle clicked');
+            e.preventDefault();
+            toggleTheme();
+        });
         
         // Keyboard accessibility
         themeToggle.addEventListener('keydown', function(e) {
             if (e.key === 'Enter' || e.key === ' ') {
+                console.log('Theme toggle activated via keyboard');
                 e.preventDefault();
                 toggleTheme();
             }
         });
+    } else {
+        console.error('Theme toggle button not found!');
     }
     
     // Listen for system theme changes
