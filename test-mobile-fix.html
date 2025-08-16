@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Correção Mobile</title>
+    <style>
+        :root {
+            --primary-color: #1a5b5a;
+            --bg-primary: #ffffff;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --border-color: #dee2e6;
+            --text-primary: #212529;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        .header {
+            background: var(--bg-primary);
+            box-shadow: 0 2px 10px var(--shadow-light);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            min-height: 70px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            gap: 1rem;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .logo-icon {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .logo-text {
+            color: var(--primary-color);
+        }
+
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+
+        .nav-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-color);
+            transition: 0.3s;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .theme-toggle {
+            background: var(--bg-primary);
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        /* MOBILE STYLES - FORCE BEHAVIOR */
+        @media screen and (max-width: 768px) {
+            .nav-toggle {
+                display: flex !important;
+                order: 2;
+                margin-left: auto;
+                margin-right: 0.5rem;
+            }
+            
+            .nav-menu {
+                display: none !important;
+                position: fixed !important;
+                top: 70px !important;
+                left: 0 !important;
+                right: 0 !important;
+                background: var(--bg-primary) !important;
+                flex-direction: column !important;
+                padding: 2rem !important;
+                box-shadow: 0 5px 15px var(--shadow-light) !important;
+                border-top: 1px solid var(--border-color) !important;
+                z-index: 1000 !important;
+            }
+            
+            .nav-menu.active {
+                display: flex !important;
+            }
+            
+            .nav-brand {
+                order: 1;
+                flex: 1;
+            }
+            
+            .theme-toggle {
+                order: 3;
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+        }
+
+        .content {
+            margin-top: 100px;
+            padding: 2rem;
+        }
+
+        .status {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="nav-brand">
+                    <span class="logo-icon">IA</span>
+                    <span class="logo-text">IA FORTE</span>
+                </div>
+                <button class="nav-toggle" id="nav-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="#" class="nav-link">Início</a></li>
+                    <li><a href="#" class="nav-link">Serviços</a></li>
+                    <li><a href="#" class="nav-link">Jurídico</a></li>
+                    <li><a href="#" class="nav-link">Contato</a></li>
+                </ul>
+                <button class="theme-toggle" id="theme-toggle">
+                    <span>🌙</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <div class="content">
+        <h1>🧪 Teste Correção Mobile - Comparar com Imagem</h1>
+        
+        <div class="status">
+            <p><strong>Largura:</strong> <span id="width">-</span>px</p>
+            <p><strong>Deve mostrar em mobile:</strong></p>
+            <ul>
+                <li>✅ Logo "IA FORTE" à esquerda</li>
+                <li>✅ Hamburger (3 linhas) no centro-direita</li>
+                <li>✅ Botão tema (🌙) à direita</li>
+                <li>❌ NÃO deve mostrar: Serviços, Jurídico, Contato expandidos</li>
+            </ul>
+            <p><strong>Menu ativo:</strong> <span id="menu-status">Não</span></p>
+        </div>
+        
+        <button onclick="testToggle()">🧪 Testar Toggle do Menu</button>
+    </div>
+
+    <script>
+        function updateStatus() {
+            const width = window.innerWidth;
+            const menu = document.getElementById('nav-menu');
+            const toggle = document.getElementById('nav-toggle');
+            const isActive = menu.classList.contains('active');
+            
+            document.getElementById('width').textContent = width;
+            document.getElementById('menu-status').textContent = isActive ? 'Sim' : 'Não';
+            
+            console.log('Width:', width, 'Mobile:', width <= 768, 'Toggle visible:', window.getComputedStyle(toggle).display, 'Menu visible:', window.getComputedStyle(menu).display);
+        }
+
+        function testToggle() {
+            const menu = document.getElementById('nav-menu');
+            menu.classList.toggle('active');
+            updateStatus();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const navToggle = document.getElementById('nav-toggle');
+            const navMenu = document.getElementById('nav-menu');
+            
+            // Force correct behavior
+            function forceCorrectBehavior() {
+                const isMobile = window.innerWidth <= 768;
+                if (isMobile) {
+                    navToggle.style.display = 'flex';
+                    if (!navMenu.classList.contains('active')) {
+                        navMenu.style.display = 'none';
+                    }
+                } else {
+                    navToggle.style.display = 'none';
+                    navMenu.style.display = 'flex';
+                }
+                updateStatus();
+            }
+            
+            navMenu.classList.remove('active');
+            forceCorrectBehavior();
+            
+            navToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                updateStatus();
+            });
+            
+            window.addEventListener('resize', forceCorrectBehavior);
+        });
+    </script>
+</body>
+</html>

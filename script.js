@@ -73,9 +73,27 @@ document.addEventListener('DOMContentLoaded', function() {
     const navMenu = document.getElementById('nav-menu');
     const navLinks = document.querySelectorAll('.nav-link');
 
-    // Ensure menu is closed on page load
+    // Ensure menu is closed on page load and force mobile behavior
     if (navMenu) {
         navMenu.classList.remove('active');
+        
+        // Force mobile menu behavior on small screens
+        function checkMobileMenu() {
+            const isMobile = window.innerWidth <= 768;
+            if (isMobile) {
+                navToggle.style.display = 'flex';
+                navMenu.style.display = 'none';
+                console.log('Forced mobile menu behavior - width:', window.innerWidth);
+            } else {
+                navToggle.style.display = 'none';
+                navMenu.style.display = 'flex';
+                console.log('Forced desktop menu behavior - width:', window.innerWidth);
+            }
+        }
+        
+        checkMobileMenu();
+        window.addEventListener('resize', checkMobileMenu);
+        
         console.log('Menu reset to closed state on page load');
     }
     
