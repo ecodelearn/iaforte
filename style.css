@@ -170,6 +170,26 @@ h1, h2, h3, h4, h5, h6 {
     gap: 2rem;
 }
 
+/* Ensure menu is visible on desktop */
+@media (min-width: 769px) {
+    .nav-toggle {
+        display: none !important;
+    }
+    
+    .nav-menu {
+        display: flex !important;
+        position: static !important;
+        transform: none !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+        flex-direction: row !important;
+    }
+}
+
 .nav-link {
     text-decoration: none;
     color: var(--primary-color);
@@ -613,13 +633,14 @@ h1, h2, h3, h4, h5, h6 {
     
     .nav-brand {
         order: 1;
+        flex: 1;
     }
     
     .nav-toggle {
         display: flex;
         order: 2;
-        margin-left: auto;
         margin-right: 0.5rem;
+        z-index: 1001;
     }
     
     .theme-toggle {
@@ -629,6 +650,7 @@ h1, h2, h3, h4, h5, h6 {
         height: 40px;
         font-size: 1rem;
         flex-shrink: 0;
+        z-index: 1001;
     }
     
     .nav-menu {
@@ -640,13 +662,18 @@ h1, h2, h3, h4, h5, h6 {
         flex-direction: column;
         padding: 2rem;
         transform: translateY(-100vh);
-        transition: transform 0.3s;
+        transition: transform 0.3s ease;
         box-shadow: 0 5px 15px var(--shadow-medium);
         border-top: 1px solid var(--border-color);
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
     }
     
     .nav-menu.active {
         transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
     }
     
     .hero-content {
