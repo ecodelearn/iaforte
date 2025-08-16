@@ -1,11 +1,12 @@
 // Theme Management
 function initializeTheme() {
     const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const defaultTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+    // Always default to light theme unless explicitly saved as dark
+    const defaultTheme = savedTheme || 'light';
     
     document.documentElement.setAttribute('data-theme', defaultTheme);
     updateThemeIcon(defaultTheme);
+    console.log('Theme initialized to:', defaultTheme);
 }
 
 function updateThemeIcon(theme) {
@@ -154,11 +155,13 @@ window.addEventListener('scroll', function() {
     const header = document.querySelector('.header');
     
     if (window.scrollY > 100) {
-        header.style.background = 'rgba(255, 255, 255, 0.95)';
+        header.style.background = 'var(--bg-primary)';
         header.style.backdropFilter = 'blur(10px)';
+        header.style.boxShadow = '0 2px 20px var(--shadow-medium)';
     } else {
-        header.style.background = '#ffffff';
+        header.style.background = 'var(--bg-primary)';
         header.style.backdropFilter = 'none';
+        header.style.boxShadow = '0 2px 10px var(--shadow-light)';
     }
 });
 
@@ -428,11 +431,13 @@ const debouncedHeaderScroll = debounce(function() {
     const header = document.querySelector('.header');
     
     if (window.scrollY > 100) {
-        header.style.background = 'rgba(255, 255, 255, 0.95)';
+        header.style.background = 'var(--bg-primary)';
         header.style.backdropFilter = 'blur(10px)';
+        header.style.boxShadow = '0 2px 20px var(--shadow-medium)';
     } else {
-        header.style.background = '#ffffff';
+        header.style.background = 'var(--bg-primary)';
         header.style.backdropFilter = 'none';
+        header.style.boxShadow = '0 2px 10px var(--shadow-light)';
     }
 }, 10);
 

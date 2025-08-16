@@ -117,6 +117,15 @@ h1, h2, h3, h4, h5, h6 {
     z-index: 1000;
     box-shadow: 0 2px 10px var(--shadow-light);
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    min-height: 70px;
+}
+
+/* Ensure consistent header appearance */
+.header .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 .nav {
