@@ -255,13 +255,18 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--tertiary-color) 100%);
-    color: var(--text-inverse);
+    background: linear-gradient(135deg, #d1d1d1 0%, #e8e8e8 100%);
+    color: var(--text-primary);
     padding: 120px 0 80px;
     min-height: 100vh;
     display: flex;
     align-items: center;
     position: relative;
+}
+
+[data-theme="dark"] .hero {
+    background: linear-gradient(135deg, #2e2e2e 0%, #1a1a1a 100%);
+    color: var(--text-primary);
 }
 
 .hero::before {
@@ -302,10 +307,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .hero-features {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.3);
     padding: 2.5rem;
     border-radius: 16px;
     backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .hero-features {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .feature-list {
@@ -324,11 +335,13 @@ h1, h2, h3, h4, h5, h6 {
 
 .feature-icon {
     font-size: 1.5rem;
-    background: rgba(255, 188, 17, 0.2);
+    background: var(--accent-color);
+    color: var(--text-inverse);
     padding: 0.8rem;
     border-radius: 12px;
     min-width: 50px;
     text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 /* Services Section */

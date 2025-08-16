@@ -27,6 +27,18 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
+        .hero-preview {
+            background: linear-gradient(135deg, #d1d1d1 0%, #e8e8e8 100%);
+            color: var(--text-primary);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+        }
+
+        [data-theme="dark"] .hero-preview {
+            background: linear-gradient(135deg, #2e2e2e 0%, #1a1a1a 100%);
+        }
+
         .theme-toggle {
             background: var(--primary-color);
             color: var(--bg-primary);
@@ -56,6 +68,13 @@
     
     <div class="status" id="status">
         Tema atual: <span id="current-theme">light</span>
+    </div>
+    
+    <div class="hero-preview">
+        <h2>Preview da Seção Hero</h2>
+        <p>Este é um preview do novo background cinza suave para a seção Hero do site.</p>
+        <p><strong>Modo Claro:</strong> Cinza quase branco (18% de escuridão)</p>
+        <p><strong>Modo Escuro:</strong> Cinza quase preto (18% de claridade)</p>
     </div>
     
     <p>Este é um teste para verificar se o sistema de temas está funcionando corretamente.</p>
