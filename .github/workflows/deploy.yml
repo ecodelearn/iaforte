@@ -1,0 +1,56 @@
+name: Deploy to FTP
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js (if needed for build)
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: Install dependencies (if needed)
+      run: |
+        # Uncomment if you have package.json
+        # npm ci
+        echo "No dependencies to install for static site"
+        
+    - name: Build project (if needed)
+      run: |
+        # Add any build steps here if needed
+        echo "No build steps needed for static site"
+        
+    - name: Deploy to FTP
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        port: ${{ secrets.FTP_PORT }}
+        protocol: ftp
+        local-dir: ./
+        server-dir: /
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/node_modules/**
+          .github/**
+          README.md
+          DEPLOY.md
+          .env*
+          **/.DS_Store
+          **/Thumbs.db
+        
+    - name: Deploy Status
+      run: |
+        echo "✅ Site deployed successfully to FTP server!"
+        echo "🌐 Site should be available at: https://iaforte.com.br"
