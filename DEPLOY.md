@@ -49,9 +49,9 @@ Você também pode executar o deploy manualmente:
 
 ## 📁 Estrutura de Deploy
 
-O deploy enviará estes arquivos para o servidor:
+O deploy enviará estes arquivos para a pasta `public_html/` do servidor:
 ```
-/
+/public_html/
 ├── index.html          # Página principal
 ├── style.css           # Estilos
 ├── script.js           # JavaScript
