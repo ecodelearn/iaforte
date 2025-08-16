@@ -72,6 +72,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const navMenu = document.getElementById('nav-menu');
     const navLinks = document.querySelectorAll('.nav-link');
 
+    // Ensure menu is closed on page load
+    if (navMenu) {
+        navMenu.classList.remove('active');
+        console.log('Menu reset to closed state on page load');
+    }
+    
+    // Reset hamburger animation on page load
+    if (navToggle) {
+        const spans = navToggle.querySelectorAll('span');
+        spans.forEach(span => {
+            span.style.transform = 'none';
+            span.style.opacity = '1';
+        });
+        console.log('Hamburger animation reset on page load');
+    }
+
     // Toggle mobile menu
     navToggle.addEventListener('click', function() {
         navMenu.classList.toggle('active');
