@@ -244,9 +244,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (form) {
         console.log('Formulário de contato inicializado');
         
-        const csrfToken = generateCSRFToken();
-        sessionStorage.setItem('csrf_token', csrfToken);
-        
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
             
@@ -263,8 +260,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
                 
+                // Obter token CSRF do servidor
+                const csrfResponse = await fetch('get-csrf.php');
+                const csrfData = await csrfResponse.json();
+                
                 const formData = new FormData(form);
-                formData.append('csrf_token', sessionStorage.getItem('csrf_token'));
+                formData.append('csrf_token', csrfData.csrf_token);
                 
                 const response = await fetch('send-email.php', {
                     method: 'POST',
@@ -291,8 +292,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (result.success) {
                     showMessage(result.message, 'success');
                     form.reset();
-                    const newToken = generateCSRFToken();
-                    sessionStorage.setItem('csrf_token', newToken);
                 } else {
                     showMessage(result.message, 'error');
                 }
