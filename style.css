@@ -213,6 +213,19 @@ h1, h2, h3, h4, h5, h6 {
     transition: 0.3s;
 }
 
+/* Hamburger animation when active */
+.nav-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+
+.nav-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.nav-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
+
 .nav-menu {
     display: flex;
     list-style: none;
@@ -762,15 +775,15 @@ h1, h2, h3, h4, h5, h6 {
     }
     
     .nav-menu {
-        display: none;
+        display: flex;
         position: fixed;
-        top: 100%;
+        top: 70px;
         left: 0;
         right: 0;
         background: var(--bg-primary);
         flex-direction: column;
         padding: 2rem;
-        transform: translateY(-100vh);
+        transform: translateY(-100%);
         transition: all 0.3s ease;
         box-shadow: 0 5px 15px var(--shadow-medium);
         border-top: 1px solid var(--border-color);

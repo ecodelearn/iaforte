@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Mobile menu functionality
     const navToggle = document.getElementById('nav-toggle');
     const navMenu = document.getElementById('nav-menu');
-    const hamburger = document.querySelector('.hamburger');
+    const hamburger = navToggle; // Use nav-toggle as hamburger
 
     function checkScreenSize() {
         if (window.innerWidth > 768) {
