@@ -504,28 +504,32 @@ function showMessage(message, type = 'success') {
 }
 
 // Função para validar formulário no frontend
-function validateForm(formData) {
+function validateForm(form) {
     const errors = [];
     
-    if (!formData.get('nome') || formData.get('nome').length < 2) {
+    const nome = form.querySelector('#nome').value.trim();
+    if (!nome || nome.length < 2) {
         errors.push('Nome deve ter pelo menos 2 caracteres.');
     }
     
-    if (!formData.get('empresa') || formData.get('empresa').length < 2) {
+    const empresa = form.querySelector('#empresa').value.trim();
+    if (!empresa || empresa.length < 2) {
         errors.push('Empresa deve ter pelo menos 2 caracteres.');
     }
     
-    const email = formData.get('email');
+    const email = form.querySelector('#email').value.trim();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email || !emailRegex.test(email)) {
         errors.push('Email inválido.');
     }
     
-    if (!formData.get('telefone')) {
+    const telefone = form.querySelector('#telefone').value.trim();
+    if (!telefone) {
         errors.push('Telefone é obrigatório.');
     }
     
-    if (!formData.get('mensagem') || formData.get('mensagem').length < 10) {
+    const mensagem = form.querySelector('#mensagem').value.trim();
+    if (!mensagem || mensagem.length < 10) {
         errors.push('Mensagem deve ter pelo menos 10 caracteres.');
     }
     
@@ -562,7 +566,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 formData.append('csrf_token', sessionStorage.getItem('csrf_token'));
                 
                 // Validar no frontend
-                const validationErrors = validateForm(formData);
+                const validationErrors = validateForm(form);
                 if (validationErrors.length > 0) {
                     showMessage(validationErrors.join(' '), 'error');
                     return;
