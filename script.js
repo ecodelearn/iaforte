@@ -568,8 +568,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
                 
-                // Enviar formulário
-                const response = await fetch('send-email.php', {
+                // Enviar formulário (teste)
+                const response = await fetch('test-php.php', {
                     method: 'POST',
                     body: formData,
                     headers: {
@@ -577,7 +577,20 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 });
                 
-                const result = await response.json();
+                // Verificar se resposta é válida
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const responseText = await response.text();
+                let result;
+                
+                try {
+                    result = JSON.parse(responseText);
+                } catch (parseError) {
+                    console.error('Resposta PHP inválida:', responseText);
+                    throw new Error('Resposta do servidor inválida');
+                }
                 
                 if (result.success) {
                     showMessage(result.message, 'success');
@@ -591,7 +604,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
             } catch (error) {
                 console.error('Erro ao enviar formulário:', error);
-                showMessage('Erro de conexão. Tente novamente mais tarde.', 'error');
+                showMessage(`Erro: ${error.message}`, 'error');
             } finally {
                 // Reabilitar botão
                 submitButton.disabled = false;
