@@ -260,14 +260,18 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
                 
-                // Obter token CSRF do servidor
-                const csrfResponse = await fetch('simple-csrf.php');
-                const csrfData = await csrfResponse.json();
+                // Obter token CSRF do servidor (sem JSON)
+                const csrfResponse = await fetch('no-json-csrf.php');
+                const csrfToken = await csrfResponse.text();
+                
+                if (csrfToken === 'ERROR') {
+                    throw new Error('Erro ao obter token de segurança');
+                }
                 
                 const formData = new FormData(form);
-                formData.append('csrf_token', csrfData.csrf_token);
+                formData.append('csrf_token', csrfToken);
                 
-                const response = await fetch('send-email.php', {
+                const response = await fetch('no-json-email.php', {
                     method: 'POST',
                     body: formData,
                     headers: {
@@ -275,25 +279,21 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 });
                 
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-                
                 const responseText = await response.text();
-                let result;
                 
-                try {
-                    result = JSON.parse(responseText);
-                } catch (parseError) {
-                    console.error('Resposta PHP inválida:', responseText);
-                    throw new Error('Resposta do servidor inválida');
-                }
-                
-                if (result.success) {
-                    showMessage(result.message, 'success');
+                if (responseText === 'SUCCESS') {
+                    showMessage('Mensagem enviada com sucesso!', 'success');
                     form.reset();
+                } else if (responseText === 'RATE_LIMIT') {
+                    showMessage('Muitas tentativas. Tente novamente em 1 hora.', 'error');
+                } else if (responseText === 'INVALID_TOKEN') {
+                    showMessage('Token de segurança inválido.', 'error');
+                } else if (responseText === 'VALIDATION_ERROR') {
+                    showMessage('Dados do formulário inválidos.', 'error');
+                } else if (responseText === 'MAIL_ERROR') {
+                    showMessage('Erro no envio. Tente novamente mais tarde.', 'error');
                 } else {
-                    showMessage(result.message, 'error');
+                    showMessage('Erro desconhecido: ' + responseText, 'error');
                 }
                 
             } catch (error) {
