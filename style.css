@@ -916,6 +916,11 @@ html {
     transition: opacity 0.6s, transform 0.6s;
 }
 
+.section.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 .section.visible {
     opacity: 1;
     transform: translateY(0);
