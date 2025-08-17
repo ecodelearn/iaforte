@@ -29,18 +29,18 @@ function loadEnv($filepath) {
 $envLoaded = loadEnv(__DIR__ . '/.env');
 
 // Função para obter variável de ambiente com fallback
-function getEnv($key, $default = null) {
+function getEnvVar($key, $default = null) {
     $value = $_ENV[$key] ?? $_SERVER[$key] ?? getenv($key);
     return $value !== false ? $value : $default;
 }
 
 // Configurações SMTP
 $smtp_config = [
-    'host' => getEnv('SMTP_HOST', 'mail.iaforte.com.br'),
-    'port' => (int)getEnv('SMTP_PORT', 465),
-    'username' => getEnv('SMTP_USERNAME', 'contato@iaforte.com.br'),
-    'password' => getEnv('SMTP_PASSWORD', ''),
-    'to_email' => getEnv('TO_EMAIL', 'contato@iaforte.com.br')
+    'host' => getEnvVar('SMTP_HOST', 'mail.iaforte.com.br'),
+    'port' => (int)getEnvVar('SMTP_PORT', 465),
+    'username' => getEnvVar('SMTP_USERNAME', 'contato@iaforte.com.br'),
+    'password' => getEnvVar('SMTP_PASSWORD', ''),
+    'to_email' => getEnvVar('TO_EMAIL', 'contato@iaforte.com.br')
 ];
 
 // Verificar se as configurações estão completas
