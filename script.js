@@ -121,38 +121,41 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Smooth Scroll for Navigation Links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
+// Initialize scroll and animations when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Smooth Scroll for Navigation Links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
     });
-});
 
-// Scroll animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
+    // Scroll animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('fade-in');
-        }
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('fade-in');
+            }
+        });
+    }, observerOptions);
+
+    // Observe all sections
+    document.querySelectorAll('section').forEach(section => {
+        section.classList.add('section');
+        observer.observe(section);
     });
-}, observerOptions);
-
-// Observe all sections
-document.querySelectorAll('section').forEach(section => {
-    section.classList.add('section');
-    observer.observe(section);
 });
 
 // Performance: Debounce function for better scroll handling
@@ -186,18 +189,23 @@ const debouncedHeaderScroll = debounce(function() {
 window.addEventListener('scroll', debouncedHeaderScroll);
 
 // Accessibility: Focus management for mobile menu
-document.getElementById('nav-toggle').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        this.click();
-        
-        // Focus first menu item when opened
-        setTimeout(() => {
-            const firstLink = document.querySelector('.nav-menu .nav-link');
-            if (firstLink && document.getElementById('nav-menu').classList.contains('active')) {
-                firstLink.focus();
+document.addEventListener('DOMContentLoaded', function() {
+    const navToggle = document.getElementById('nav-toggle');
+    if (navToggle) {
+        navToggle.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.click();
+                
+                // Focus first menu item when opened
+                setTimeout(() => {
+                    const firstLink = document.querySelector('.nav-menu .nav-link');
+                    if (firstLink && document.getElementById('nav-menu').classList.contains('active')) {
+                        firstLink.focus();
+                    }
+                }, 100);
             }
-        }, 100);
+        });
     }
 });
 
