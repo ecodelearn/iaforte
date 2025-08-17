@@ -1,45 +1,8 @@
-// DOM Content Loaded
-console.log('DOM loaded, initializing theme...');
-
-// Theme management
-let currentTheme = localStorage.getItem('theme') || 'light';
-console.log('Theme initialized to:', currentTheme);
-
-// Apply initial theme
-document.documentElement.setAttribute('data-theme', currentTheme);
-
-// Theme toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-    // Set initial theme
+// Theme management - Apply immediately to prevent flash
+(function() {
+    const currentTheme = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', currentTheme);
-    
-    // Update theme icon
-    const themeIcon = document.querySelector('.theme-icon');
-    if (themeIcon) {
-        themeIcon.textContent = currentTheme === 'light' ? '🌙' : '☀️';
-    }
-    
-    const themeToggle = document.querySelector('.theme-toggle');
-    console.log('Theme toggle button found:', themeToggle);
-    
-    if (themeToggle) {
-        console.log('Adding click event listener to theme toggle');
-        themeToggle.addEventListener('click', function() {
-            console.log('Theme toggle clicked, current theme:', currentTheme);
-            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-            document.documentElement.setAttribute('data-theme', currentTheme);
-            localStorage.setItem('theme', currentTheme);
-            
-            // Update icon
-            const icon = this.querySelector('.theme-icon');
-            if (icon) {
-                icon.textContent = currentTheme === 'light' ? '🌙' : '☀️';
-            }
-            
-            console.log('Theme switched to:', currentTheme);
-        });
-    }
-});
+})();
 
 // Mobile menu toggle
 document.addEventListener('DOMContentLoaded', function() {
@@ -273,6 +236,30 @@ function validateForm(form) {
 // Initialize all functionality when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     console.log('IA FORTE - Site carregado com sucesso!');
+    
+    // Theme toggle functionality
+    let currentTheme = localStorage.getItem('theme') || 'light';
+    const themeToggle = document.querySelector('.theme-toggle');
+    
+    if (themeToggle) {
+        // Update theme icon
+        const themeIcon = themeToggle.querySelector('.theme-icon');
+        if (themeIcon) {
+            themeIcon.textContent = currentTheme === 'light' ? '🌙' : '☀️';
+        }
+        
+        themeToggle.addEventListener('click', function() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            localStorage.setItem('theme', currentTheme);
+            
+            // Update icon
+            const icon = this.querySelector('.theme-icon');
+            if (icon) {
+                icon.textContent = currentTheme === 'light' ? '🌙' : '☀️';
+            }
+        });
+    }
     
     // Inicializar formulário de contato
     const form = document.getElementById('contact-form');
