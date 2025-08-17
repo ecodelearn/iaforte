@@ -1,0 +1,50 @@
+<?php
+// Função para carregar variáveis do arquivo .env
+function loadEnv($filepath) {
+    if (!file_exists($filepath)) {
+        return false;
+    }
+    
+    $lines = file($filepath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    foreach ($lines as $line) {
+        if (strpos(trim($line), '#') === 0) {
+            continue; // Ignora comentários
+        }
+        
+        list($name, $value) = explode('=', $line, 2);
+        $name = trim($name);
+        $value = trim($value);
+        
+        if (!array_key_exists($name, $_SERVER) && !array_key_exists($name, $_ENV)) {
+            putenv(sprintf('%s=%s', $name, $value));
+            $_ENV[$name] = $value;
+            $_SERVER[$name] = $value;
+        }
+    }
+    
+    return true;
+}
+
+// Carregar variáveis de ambiente
+$envLoaded = loadEnv(__DIR__ . '/.env');
+
+// Função para obter variável de ambiente com fallback
+function getEnv($key, $default = null) {
+    $value = $_ENV[$key] ?? $_SERVER[$key] ?? getenv($key);
+    return $value !== false ? $value : $default;
+}
+
+// Configurações SMTP
+$smtp_config = [
+    'host' => getEnv('SMTP_HOST', 'mail.iaforte.com.br'),
+    'port' => (int)getEnv('SMTP_PORT', 465),
+    'username' => getEnv('SMTP_USERNAME', 'contato@iaforte.com.br'),
+    'password' => getEnv('SMTP_PASSWORD', ''),
+    'to_email' => getEnv('TO_EMAIL', 'contato@iaforte.com.br')
+];
+
+// Verificar se as configurações estão completas
+if (empty($smtp_config['password'])) {
+    error_log('AVISO: Senha SMTP não configurada no arquivo .env');
+}
+?>

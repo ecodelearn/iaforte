@@ -475,13 +475,128 @@ document.getElementById('nav-toggle').addEventListener('keydown', function(e) {
     }
 });
 
+// Função para gerar token CSRF
+function generateCSRFToken() {
+    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+}
+
+// Função para exibir mensagens
+function showMessage(message, type = 'success') {
+    // Remove mensagem anterior se existir
+    const existingMessage = document.querySelector('.form-message');
+    if (existingMessage) {
+        existingMessage.remove();
+    }
+    
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `form-message form-message-${type}`;
+    messageDiv.textContent = message;
+    
+    const form = document.getElementById('contact-form');
+    form.insertBefore(messageDiv, form.firstChild);
+    
+    // Remove a mensagem após 5 segundos
+    setTimeout(() => {
+        if (messageDiv.parentNode) {
+            messageDiv.remove();
+        }
+    }, 5000);
+}
+
+// Função para validar formulário no frontend
+function validateForm(formData) {
+    const errors = [];
+    
+    if (!formData.get('nome') || formData.get('nome').length < 2) {
+        errors.push('Nome deve ter pelo menos 2 caracteres.');
+    }
+    
+    if (!formData.get('empresa') || formData.get('empresa').length < 2) {
+        errors.push('Empresa deve ter pelo menos 2 caracteres.');
+    }
+    
+    const email = formData.get('email');
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email)) {
+        errors.push('Email inválido.');
+    }
+    
+    if (!formData.get('telefone')) {
+        errors.push('Telefone é obrigatório.');
+    }
+    
+    if (!formData.get('mensagem') || formData.get('mensagem').length < 10) {
+        errors.push('Mensagem deve ter pelo menos 10 caracteres.');
+    }
+    
+    return errors;
+}
+
 // Initialize all functionality when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     console.log('IA FORTE - Site carregado com sucesso!');
     
-    // Add any initialization code here
+    // Inicializar formulário de contato
     const form = document.getElementById('contact-form');
     if (form) {
         console.log('Formulário de contato inicializado');
+        
+        // Gerar e armazenar token CSRF
+        const csrfToken = generateCSRFToken();
+        sessionStorage.setItem('csrf_token', csrfToken);
+        
+        // Adicionar evento de submit
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitButton = form.querySelector('button[type="submit"]');
+            const originalText = submitButton.textContent;
+            
+            try {
+                // Desabilitar botão e mostrar loading
+                submitButton.disabled = true;
+                submitButton.textContent = 'Enviando...';
+                
+                // Coletar dados do formulário
+                const formData = new FormData(form);
+                formData.append('csrf_token', sessionStorage.getItem('csrf_token'));
+                
+                // Validar no frontend
+                const validationErrors = validateForm(formData);
+                if (validationErrors.length > 0) {
+                    showMessage(validationErrors.join(' '), 'error');
+                    return;
+                }
+                
+                // Enviar formulário
+                const response = await fetch('send-email.php', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showMessage(result.message, 'success');
+                    form.reset();
+                    // Gerar novo token CSRF
+                    const newToken = generateCSRFToken();
+                    sessionStorage.setItem('csrf_token', newToken);
+                } else {
+                    showMessage(result.message, 'error');
+                }
+                
+            } catch (error) {
+                console.error('Erro ao enviar formulário:', error);
+                showMessage('Erro de conexão. Tente novamente mais tarde.', 'error');
+            } finally {
+                // Reabilitar botão
+                submitButton.disabled = false;
+                submitButton.textContent = originalText;
+            }
+        });
     }
 });
