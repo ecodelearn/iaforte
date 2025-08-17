@@ -93,11 +93,7 @@ $to_email = $smtp_config['to_email'];
 if (class_exists('PHPMailer\PHPMailer\PHPMailer')) {
     require_once 'vendor/autoload.php';
     
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\SMTP;
-    use PHPMailer\PHPMailer\Exception;
-    
-    $mail = new PHPMailer(true);
+    $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
     
     try {
         // Configurações SMTP
@@ -106,7 +102,7 @@ if (class_exists('PHPMailer\PHPMailer\PHPMailer')) {
         $mail->SMTPAuth = true;
         $mail->Username = $smtp_username;
         $mail->Password = $smtp_password;
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+        $mail->SMTPSecure = \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_SMTPS;
         $mail->Port = $smtp_port;
         $mail->CharSet = 'UTF-8';
         
@@ -144,7 +140,7 @@ if (class_exists('PHPMailer\PHPMailer\PHPMailer')) {
         
         echo json_encode(['success' => true, 'message' => 'Mensagem enviada com sucesso!']);
         
-    } catch (Exception $e) {
+    } catch (\PHPMailer\PHPMailer\Exception $e) {
         error_log("Erro no envio de email: " . $mail->ErrorInfo);
         echo json_encode(['success' => false, 'message' => 'Erro interno. Tente novamente mais tarde.']);
     }
