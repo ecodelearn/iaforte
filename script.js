@@ -261,7 +261,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 
                 // Obter token CSRF do servidor
-                const csrfResponse = await fetch('get-csrf.php');
+                const csrfResponse = await fetch('simple-csrf.php');
                 const csrfData = await csrfResponse.json();
                 
                 const formData = new FormData(form);
