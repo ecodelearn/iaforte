@@ -561,19 +561,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 submitButton.disabled = true;
                 submitButton.textContent = 'Enviando...';
                 
-                // Coletar dados do formulário
-                const formData = new FormData(form);
-                formData.append('csrf_token', sessionStorage.getItem('csrf_token'));
-                
-                // Validar no frontend
+                // Validar no frontend primeiro
                 const validationErrors = validateForm(form);
                 if (validationErrors.length > 0) {
                     showMessage(validationErrors.join(' '), 'error');
                     return;
                 }
                 
-                // Enviar formulário (teste)
-                const response = await fetch('test-php.php', {
+                // Coletar dados do formulário
+                const formData = new FormData(form);
+                formData.append('csrf_token', sessionStorage.getItem('csrf_token'));
+                
+                // Enviar formulário
+                const response = await fetch('send-email.php', {
                     method: 'POST',
                     body: formData,
                     headers: {
