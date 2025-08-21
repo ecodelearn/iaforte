@@ -100,13 +100,25 @@ $body .= "Esta mensagem foi enviada automaticamente pelo sistema de contato do s
 
 $headers_string = implode("\r\n", $headers);
 
-if (mail($to_email, $subject, $body, $headers_string)) {
+// Log de debug
+error_log("DEBUG - Tentando enviar email para: $to_email");
+error_log("DEBUG - Assunto: $subject");
+error_log("DEBUG - De: $smtp_username");
+
+$mail_result = mail($to_email, $subject, $body, $headers_string);
+
+// Log do resultado
+error_log("DEBUG - Resultado mail(): " . ($mail_result ? 'TRUE' : 'FALSE'));
+
+if ($mail_result) {
     // Registrar tentativa
     $attempts[] = $current_time;
     file_put_contents($rate_limit_file, serialize($attempts));
     
+    error_log("SUCCESS - Email enviado com sucesso via formulário");
     echo 'SUCCESS';
 } else {
+    error_log("ERROR - Falha no envio do email via formulário");
     echo 'MAIL_ERROR';
 }
 ?>
