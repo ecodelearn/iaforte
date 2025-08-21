@@ -69,7 +69,7 @@ $subject = '[Contato Site] Mensagem de ' . $nome . ' - ' . $empresa;
 // Cabeçalhos exatamente como o test-email-antispam.php que funciona
 $headers = array();
 $headers[] = 'From: IA Forte <' . $smtp_username . '>';
-$headers[] = 'Reply-To: ' . $nome . ' <' . $email . '>';
+// $headers[] = 'Reply-To: ' . $nome . ' <' . $email . '>'; // Removido - causa FREEMAIL_REPLYTO_NEQ_FROM
 $headers[] = 'Return-Path: ' . $smtp_username;
 $headers[] = 'Message-ID: <' . time() . '.1b9f07f95d0a2717c1faa75fa7f57afe@' . $domain . '>';
 $headers[] = 'X-Mailer: PHP/' . phpversion();
@@ -92,7 +92,7 @@ $body .= "MENSAGEM:\n";
 $body .= "---------\n";
 $body .= wordwrap($mensagem, 70, "\n", true) . "\n\n";
 $body .= "==============================\n";
-$body .= "Data/Hora: " . date('d/m/Y à\s H:i:s') . "\n";
+$body .= "Data/Hora: " . date('d/m/Y às H:i:s') . "\n";
 $body .= "IP do Remetente: " . $_SERVER['REMOTE_ADDR'] . "\n";
 $body .= "User Agent: " . (isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : 'N/A') . "\n";
 $body .= "==============================\n\n";
