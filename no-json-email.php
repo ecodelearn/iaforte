@@ -71,13 +71,12 @@ $headers = array();
 $headers[] = 'From: IA Forte <' . $smtp_username . '>';
 $headers[] = 'Reply-To: ' . $nome . ' <' . $email . '>';
 $headers[] = 'Return-Path: ' . $smtp_username;
-$headers[] = 'Message-ID: <' . time() . '.' . md5(time() . $email . rand()) . '@' . $domain . '>';
+$headers[] = 'Message-ID: <' . time() . '.1b9f07f95d0a2717c1faa75fa7f57afe@' . $domain . '>';
 $headers[] = 'X-Mailer: PHP/' . phpversion();
 $headers[] = 'X-Priority: 3';
 $headers[] = 'MIME-Version: 1.0';
 $headers[] = 'Content-Type: text/plain; charset=UTF-8';
 $headers[] = 'Content-Transfer-Encoding: 8bit';
-$headers[] = 'Sender: <iafortec@useast1.fastcpanelserver.com>';
 
 // Corpo do email exatamente como o test-email-antispam.php que funciona
 $body = "NOVA SOLICITAÇÃO DE CONTATO\n";
