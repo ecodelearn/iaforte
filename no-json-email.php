@@ -66,37 +66,43 @@ $to_email = $smtp_config['to_email'];
 $domain = 'iaforte.com.br';
 $subject = '[Contato Site] Mensagem de ' . $nome . ' - ' . $empresa;
 
-// Cabeçalhos melhorados para evitar spam
+// Cabeçalhos otimizados para evitar classificação como spam
 $headers = array();
-$headers[] = 'From: IA Forte <' . $smtp_username . '>';
-$headers[] = 'Reply-To: ' . $nome . ' <' . $email . '>';
-$headers[] = 'Return-Path: ' . $smtp_username;
-$headers[] = 'Message-ID: <' . time() . '.' . md5($email . $nome) . '@' . $domain . '>';
-$headers[] = 'X-Mailer: PHP/' . phpversion();
-$headers[] = 'X-Priority: 3';
+$headers[] = 'From: "IA Forte - Contato Site" <' . $smtp_username . '>';
+$headers[] = 'Reply-To: "' . $nome . ' (' . $empresa . ')" <' . $email . '>';
+$headers[] = 'Return-Path: <' . $smtp_username . '>';
+$headers[] = 'Sender: <' . $smtp_username . '>';
+$headers[] = 'Message-ID: <' . date('YmdHis') . '.' . uniqid() . '@' . $domain . '>';
+$headers[] = 'Date: ' . date('r');
+$headers[] = 'X-Mailer: IA Forte Contact Form v1.0';
+$headers[] = 'X-Priority: 3 (Normal)';
+$headers[] = 'X-MSMail-Priority: Normal';
+$headers[] = 'Importance: Normal';
 $headers[] = 'MIME-Version: 1.0';
-$headers[] = 'Content-Type: text/plain; charset=UTF-8';
+$headers[] = 'Content-Type: text/plain; charset=UTF-8; format=flowed';
 $headers[] = 'Content-Transfer-Encoding: 8bit';
+$headers[] = 'X-Auto-Response-Suppress: All';
+$headers[] = 'X-Entity-ID: iaforte-contact-form';
+$headers[] = 'List-Unsubscribe: <mailto:' . $smtp_username . '?subject=unsubscribe>';
+$headers[] = 'X-Originating-IP: [' . $_SERVER['REMOTE_ADDR'] . ']';
 
-// Corpo do email mais profissional
-$body = "NOVA SOLICITAÇÃO DE CONTATO\n";
-$body .= "==============================\n\n";
-$body .= "Uma nova mensagem foi enviada através do formulário de contato do site IA Forte.\n\n";
-$body .= "DADOS DO CONTATO:\n";
-$body .= "-----------------\n";
-$body .= "Nome Completo: " . $nome . "\n";
-$body .= "Empresa/Organização: " . $empresa . "\n";
-$body .= "E-mail de Contato: " . $email . "\n";
+// Corpo do email otimizado para evitar filtros de spam
+$body = "Olá,\n\n";
+$body .= "Você recebeu uma nova solicitação de contato através do site IA Forte.\n\n";
+$body .= "Informações do interessado:\n\n";
+$body .= "Nome: " . $nome . "\n";
+$body .= "Empresa: " . $empresa . "\n";
+$body .= "Email: " . $email . "\n";
 $body .= "Telefone: " . $telefone . "\n\n";
-$body .= "MENSAGEM:\n";
-$body .= "---------\n";
-$body .= wordwrap($mensagem, 70, "\n", true) . "\n\n";
-$body .= "==============================\n";
-$body .= "Data/Hora: " . date('d/m/Y às H:i:s') . "\n";
-$body .= "IP do Remetente: " . $_SERVER['REMOTE_ADDR'] . "\n";
-$body .= "User Agent: " . (isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : 'N/A') . "\n";
-$body .= "==============================\n\n";
-$body .= "Esta mensagem foi enviada automaticamente pelo sistema de contato do site IA Forte.";
+$body .= "Mensagem:\n";
+$body .= wordwrap($mensagem, 72, "\n", true) . "\n\n";
+$body .= "---\n";
+$body .= "Detalhes técnicos:\n";
+$body .= "Enviado em: " . date('d/m/Y às H:i:s') . "\n";
+$body .= "Origem: " . $_SERVER['REMOTE_ADDR'] . "\n\n";
+$body .= "Atenciosamente,\n";
+$body .= "Sistema de Contato IA Forte\n";
+$body .= "https://iaforte.com.br";
 
 $headers_string = implode("\r\n", $headers);
 
