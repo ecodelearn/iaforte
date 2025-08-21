@@ -77,6 +77,7 @@ $headers[] = 'X-Priority: 3';
 $headers[] = 'MIME-Version: 1.0';
 $headers[] = 'Content-Type: text/plain; charset=UTF-8';
 $headers[] = 'Content-Transfer-Encoding: 8bit';
+$headers[] = 'Sender: <iafortec@useast1.fastcpanelserver.com>';
 
 // Corpo do email exatamente como o test-email-antispam.php que funciona
 $body = "NOVA SOLICITAÇÃO DE CONTATO\n";
@@ -92,7 +93,7 @@ $body .= "MENSAGEM:\n";
 $body .= "---------\n";
 $body .= wordwrap($mensagem, 70, "\n", true) . "\n\n";
 $body .= "==============================\n";
-$body .= "Data/Hora: " . date('d/m/Y às H:i:s') . "\n";
+$body .= "Data/Hora: " . date('d/m/Y à\s H:i:s') . "\n";
 $body .= "IP do Remetente: " . $_SERVER['REMOTE_ADDR'] . "\n";
 $body .= "User Agent: " . (isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : 'N/A') . "\n";
 $body .= "==============================\n\n";
