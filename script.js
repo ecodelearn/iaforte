@@ -220,6 +220,15 @@ document.addEventListener('DOMContentLoaded', function() {
         section.classList.add('section');
         observer.observe(section);
     });
+
+    // Animate service features bullets in sequence
+    const serviceCards = document.querySelectorAll('.service-card');
+    serviceCards.forEach(card => {
+        const featureItems = card.querySelectorAll('.service-features li');
+        featureItems.forEach((item, index) => {
+            item.style.setProperty('--delay', index);
+        });
+    });
     
     // Header scroll effect
     const debouncedHeaderScroll = debounce(function() {
