@@ -257,6 +257,12 @@ h1, h2, h3, h4, h5, h6 {
     .nav-menu.active {
         display: flex !important;
     }
+    
+    /* Desktop Hero spacing optimization */
+    .hero {
+        padding: 90px 0 70px;
+        min-height: auto;
+    }
 }
 
 .nav-link {
@@ -368,8 +374,8 @@ h1, h2, h3, h4, h5, h6 {
 .hero {
     background: var(--bg-primary);
     color: var(--text-primary);
-    padding: 140px 0 100px;
-    min-height: 100vh;
+    padding: 100px 0 80px;
+    min-height: auto;
     display: flex;
     align-items: center;
     position: relative;
