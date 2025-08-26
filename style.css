@@ -571,7 +571,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .solutions-text .section-title,
 .solutions-text .section-subtitle {
-    text-align: center;
+    text-align: left;
 }
 
 .solutions-features {
