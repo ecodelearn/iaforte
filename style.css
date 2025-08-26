@@ -266,7 +266,7 @@ h1, h2, h3, h4, h5, h6 {
     
     /* Desktop Solutions metrics alignment */
     .solutions-metrics {
-        margin-top: 8.5rem;
+        margin-top: 0;
     }
 }
 
@@ -580,13 +580,9 @@ h1, h2, h3, h4, h5, h6 {
     align-items: start;
 }
 
-.solutions-text .section-title,
-.solutions-text .section-subtitle {
-    text-align: left;
-}
 
 .solutions-features {
-    margin-top: 2rem;
+    margin-top: 0;
 }
 
 .solutions-feature {
@@ -900,10 +896,6 @@ h1, h2, h3, h4, h5, h6 {
         gap: 2rem;
     }
     
-    .solutions-text .section-title,
-    .solutions-text .section-subtitle {
-        text-align: center;
-    }
     
     .solutions-features {
         text-align: center;
