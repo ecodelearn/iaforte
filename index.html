@@ -9,6 +9,106 @@
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="style.css">
 </head>
+
+<!-- 
+=================================================================
+DOCUMENTAÇÃO DAS CLASSES CSS - IA FORTE
+=================================================================
+
+CONVENÇÕES DE NOMENCLATURA:
+- Padrão: kebab-case (palavras separadas por hífen)
+- Estrutura hierárquica: seção-elemento-modificador
+- Semântica clara e descritiva
+
+=================================================================
+ESTRUTURA DAS SEÇÕES PRINCIPAIS:
+=================================================================
+
+1. HEADER (.header)
+   ├── .container
+   ├── .nav
+   │   ├── .nav-brand (.logo-icon "IA", .logo-text "FORTE")
+   │   ├── .nav-toggle (mobile)
+   │   ├── .nav-menu (.nav-link)
+   │   └── .theme-toggle (.theme-icon)
+
+2. HERO (.hero)
+   ├── .container
+   ├── .hero-content
+   │   ├── .hero-text
+   │   │   ├── .hero-title
+   │   │   ├── .hero-subtitle  
+   │   │   └── .hero-buttons (.btn .btn-primary/.btn-secondary)
+   │   └── .hero-features
+   │       └── .feature-list
+   │           └── .feature-item (.feature-icon)
+
+3. SERVICES (.services)
+   ├── .container
+   ├── .section-header (.section-title, .section-subtitle)
+   └── .services-grid
+       └── .service-card
+           ├── .service-icon
+           ├── .service-title
+           ├── .service-description
+           └── .service-features
+
+4. SOLUTIONS (.solutions) - REFATORADA DE "LEGAL"
+   ├── .container
+   └── .solutions-content
+       ├── .solutions-text
+       │   ├── .section-title/.section-subtitle
+       │   └── .solutions-features
+       │       └── .solutions-feature
+       └── .solutions-metrics
+           ├── .metrics-grid
+           └── .metric (.metric-value, .metric-label)
+
+5. CONTACT (.contact)
+   ├── .container
+   ├── .section-header (.section-title, .section-subtitle)
+   └── .contact-content
+       ├── .contact-form
+       │   ├── .form-row
+       │   ├── .form-group
+       │   └── .btn .btn-primary .btn-full
+       └── .contact-info
+           └── .contact-item (.contact-icon)
+
+6. FOOTER (.footer)
+   ├── .container
+   └── .footer-content
+       ├── .footer-left (.footer-brand "IA FORTE", .footer-author)
+       │   └── .footer-logo-text (classe especial para texto branco)
+       └── .footer-right (.footer-copyright, .footer-tagline)
+
+=================================================================
+CLASSES UTILITÁRIAS E GLOBAIS:
+=================================================================
+- .container: Wrapper principal com max-width
+- .btn: Botões base (.btn-primary, .btn-secondary, .btn-full)
+- .section-header: Header padrão das seções
+- .section-title/.section-subtitle: Títulos padronizados
+- .footer-logo-text: Classe especial para logo branco no footer
+
+=================================================================
+ANIMAÇÕES E ESTADOS:
+=================================================================
+- .section.fade-in: Animação de entrada das seções
+- .metric.visible: Trigger para animações das métricas
+- .nav-menu.active: Estado ativo do menu mobile
+- .nav-toggle.active: Estado ativo do hambúrguer
+
+=================================================================
+RESPONSIVIDADE:
+=================================================================
+- Mobile-first approach
+- Breakpoints: 768px (tablet), 480px (mobile)
+- Grid adaptativo nas seções services e solutions
+- Menu mobile com overlay
+
+=================================================================
+-->
 <body>
     <!-- Header -->
     <header class="header" id="header">
@@ -16,7 +116,7 @@
             <nav class="nav">
                 <div class="nav-brand">
                     <span class="logo-icon">IA</span>
-                    <span class="logo-text">IA FORTE</span>
+                    <span class="logo-text">FORTE</span>
                 </div>
                 <button class="nav-toggle" id="nav-toggle">
                     <span></span>
@@ -115,28 +215,28 @@
     </section>
 
     <!-- Soluções Section -->
-    <section class="legal" id="solucoes">
+    <section class="solutions" id="solucoes">
         <div class="container">
-            <div class="legal-content">
-                <div class="legal-text">
+            <div class="solutions-content">
+                <div class="solutions-text">
                     <h2 class="section-title">Experiência Multissetorial</h2>
                     <p class="section-subtitle">Nossa equipe possui experiência prática em diversos segmentos, desenvolvendo soluções sob medida para cada desafio empresarial.</p>
-                    <div class="legal-features">
-                        <div class="legal-feature">
+                    <div class="solutions-features">
+                        <div class="solutions-feature">
                             <h4>Automação de Processos Empresariais</h4>
                             <p>Sistemas inteligentes para automatizar tarefas repetitivas e otimizar fluxos de trabalho em qualquer setor.</p>
                         </div>
-                        <div class="legal-feature">
+                        <div class="solutions-feature">
                             <h4>Desenvolvimento de Multi-agentes</h4>
                             <p>Tecnologia avançada com agentes especializados para análise complexa e tomada de decisão automatizada.</p>
                         </div>
-                        <div class="legal-feature">
+                        <div class="solutions-feature">
                             <h4>Integração com Plataformas IA</h4>
                             <p>Conectividade completa com as principais plataformas de inteligência artificial do mercado.</p>
                         </div>
                     </div>
                 </div>
-                <div class="legal-metrics">
+                <div class="solutions-metrics">
                     <h3>Resultados Comprovados</h3>
                     <div class="metrics-grid">
                         <div class="metric">
@@ -215,7 +315,7 @@
                 <div class="footer-left">
                     <div class="footer-brand">
                         <span class="logo-icon">IA</span>
-                        <span class="logo-text">IA FORTE</span>
+                        <span class="logo-text footer-logo-text">FORTE</span>
                     </div>
                     <p class="footer-author">Por Daniel Dias</p>
                 </div>

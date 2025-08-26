@@ -230,6 +230,27 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
+    // Animate metrics when they come into view
+    const metricsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const metrics = entry.target.querySelectorAll('.metric');
+                metrics.forEach((metric, index) => {
+                    metric.style.setProperty('--delay', index);
+                    metric.classList.add('visible');
+                });
+            }
+        });
+    }, {
+        threshold: 0.3,
+        rootMargin: '0px 0px -100px 0px'
+    });
+
+    const solutionsMetrics = document.querySelector('.solutions-metrics');
+    if (solutionsMetrics) {
+        metricsObserver.observe(solutionsMetrics);
+    }
+    
     // Header scroll effect
     const debouncedHeaderScroll = debounce(function() {
         const header = document.querySelector('.header');
